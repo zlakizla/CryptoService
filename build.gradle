@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+}
+
+group 'CryptoService'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+sourceSets {
+    main {
+        java {
+            srcDir("src/main")
+        }
+
+    }
+    test {
+        java {
+            srcDir("src/test")
+        }
+    }
+}
+dependencies {
+    compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.54'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'org.springframework.boot', name: 'spring-boot', version: '2.0.4.RELEASE'
+    compile group: 'org.eclipse.jetty.spdy', name: 'spdy-http-server', version: '9.2.26.v20180806'
+    compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version: '2.22.2'
+    compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version: '2.22.2'
+    compile group: 'org.glassfish.jersey.media', name: 'jersey-media-multipart', version: '2.22.2'
+    compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.3.7.v20160115'
+    compile 'log4j:log4j:1.2.17'
+    compile group: 'com.google.guava', name: 'guava', version: '19.0'
+}
