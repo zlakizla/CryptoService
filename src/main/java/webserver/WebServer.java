@@ -9,16 +9,19 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.HashSet;
 import java.util.Set;
 
 
-
-public class WebServer  {
+@Configuration
+public class WebServer {
     public Server server;
     static org.apache.log4j.Logger LOGGER = Logger.getLogger(AEScrypto.class.getName());
-    public WebServer()  {
+
+    public WebServer() {
         Set<Class<?>> s = new HashSet<Class<?>>();
         s.add(ApiCrypto.class);
         ResourceConfig config = new ResourceConfig(s);
@@ -40,7 +43,10 @@ public class WebServer  {
         this.server = new Server(8080);
         this.server.setHandler(accessHandler);
 
-    } public void start() {
+    }
+
+    @Bean
+    public void start() {
         try {
             //START WEB
             LOGGER.info("Start web server");
@@ -50,6 +56,7 @@ public class WebServer  {
         }
     }
 
+    @Bean
     public void stop() {
         try {
             //STOP RPC
