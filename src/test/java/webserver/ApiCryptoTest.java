@@ -27,8 +27,6 @@ public class ApiCryptoTest {
 
     /**
      * Before init test generate two seed and key Pair for each seed
-     *
-     * @throws ParseException
      */
     @Before
     public void initSeed() throws ParseException {
@@ -61,7 +59,6 @@ public class ApiCryptoTest {
 
     }
 
-
     @Test
     public void generateSeed() throws Exception {
         Object result = new ApiCrypto().GenerateSeed();
@@ -85,8 +82,6 @@ public class ApiCryptoTest {
         Assert.assertNotNull(keys.get("privateKey"));
     }
 
-
-    //TODO доделать шифрование проверки по парам ключей
     @Test
     public void encrypt() throws Exception {
 
@@ -101,7 +96,6 @@ public class ApiCryptoTest {
         Assert.assertNotNull(jsonObject.get("encrypted"));
     }
 
-    //TODO доделать расшифровку по паре ключей
     @Test
     public void decrypt() throws Exception {
         if (MESSAGE_ENCRYPT == null)
@@ -141,8 +135,6 @@ public class ApiCryptoTest {
     public void verifySignature() throws Exception {
         if (SIGN == null)
             sign();
-
-       // String messageBase58 = Base58.encode(MESSAGE.getBytes());
 
         Object result = new ApiCrypto().VerifySignature("{\"publicKey\":\"" + Account1_publicKey + "\"," +
                 "\"signature\":\"" + SIGN + "\"," +
