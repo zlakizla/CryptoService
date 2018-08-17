@@ -9,15 +9,12 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.HashSet;
 import java.util.Set;
 
 
-@Configuration
-public class WebServer {
+public class WebServer extends SetSettingFile {
     public Server server;
     static org.apache.log4j.Logger LOGGER = Logger.getLogger(AEScrypto.class.getName());
 
@@ -36,16 +33,20 @@ public class WebServer {
 
         //CREATE WHITELIST
         IPAccessHandler accessHandler = new IPAccessHandler();
-        accessHandler.setWhite(new String[]{"127.0.0.1"});
+
+        String[] whiteList = new String[WHITE_LIST.size()];
+        for (int i = 0; i < WHITE_LIST.size(); i++) {
+            whiteList[i] = WHITE_LIST.get(i);
+        }
+        accessHandler.setWhite(whiteList);
         accessHandler.setHandler(context);
 
         //CREATE WEB SERVER
-        this.server = new Server(8080);
+        this.server = new Server(SERVER_PORT);
         this.server.setHandler(accessHandler);
 
     }
 
-    @Bean
     public void start() {
         try {
             //START WEB
@@ -56,7 +57,6 @@ public class WebServer {
         }
     }
 
-    @Bean
     public void stop() {
         try {
             //STOP RPC

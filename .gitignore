@@ -2,3 +2,5 @@
 /.gradle/
 /build/
 /out/
+setting.json
+CryptoProvider.log
