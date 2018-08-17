@@ -1,7 +1,6 @@
 Crypto Provider
 
 Js library:
-
         "CryptoProvider/JsCryptoProvider"
 
 Java source: 
