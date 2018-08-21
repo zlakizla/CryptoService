@@ -18,11 +18,13 @@ public class Start {
             try (InputStream inputStream = ClassLoader.class.getResourceAsStream("/log4j/log4j.default")) {
                 PropertyConfigurator.configure(inputStream);
                 LOGGER.error("log4j.properties not found: " + log4j.getAbsolutePath() + ", using default.");
+            } catch (Exception e) {
+                System.out.println("Error: missing configuration log4j file.");
+                System.exit(-1);
             }
         }
 
         new SetSettingFile().SettingFile();
         new WebServer().start();
-
     }
 }
