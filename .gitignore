@@ -1,6 +1,7 @@
-/.idea/
-/.gradle/
-/build/
-/out/
+.gradle/
+.idea/
+build/
+gradle/
+out/
 setting.json
 CryptoProvider.log

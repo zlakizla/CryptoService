@@ -1,9 +1,24 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.ajoberstar:grgit:1.7.2'
+    }
+}
+
 plugins {
     id 'java'
 }
 
+ext {
+    git = org.ajoberstar.grgit.Grgit.open()
+    rev = git.head().id
+    rev = git.head().getAbbreviatedId(8)
+}
+
 group 'CryptoProvider'
-version '1.0-SNAPSHOT'
+version "1.0-${git.head().abbreviatedId}"
 
 sourceCompatibility = 1.8
 
@@ -13,7 +28,14 @@ repositories {
 
 jar{
     manifest{
-        attributes 'Main-Class':'Start'
+        attributes(
+                'Main-Class':'Start',
+                'Implementation-Title' : 'Gradle Build: ' + project.name,
+                'Implementation-Version' : project.version,
+                'Build-Time' : new Date().format("yyyy-MM-dd HH:mm:ssZ"),
+                'Git-Commit' : rev,
+                'Git-Branch' : git.branch.current.getName()
+        )
     }
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     exclude('META-INF/*.SF')
@@ -21,6 +43,11 @@ jar{
     exclude('META-INF/*.RSA')
 
 }
+
+//tasks.withType(JavaCompile) {
+//    options.compilerArgs << '-Xlint:unchecked'
+//    options.deprecation = true
+//}
 
 sourceSets {
     main {
