@@ -10,6 +10,7 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
+import java.net.InetSocketAddress;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,9 +43,8 @@ public class WebServer extends SetSettingFile {
         accessHandler.setHandler(context);
 
         //CREATE WEB SERVER
-        this.server = new Server(SERVER_PORT);
+        this.server = new Server(new InetSocketAddress("127.0.0.1",SERVER_PORT));
         this.server.setHandler(accessHandler);
-
     }
 
     public void start() {
