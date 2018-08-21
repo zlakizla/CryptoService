@@ -58,12 +58,9 @@ public class ApiCrypto {
 
         Pair<byte[], byte[]> keyPair = Crypto.getInstance().createKeyPair(Base58.decode(seed));
 
-        HashMap<String, String> mapKey = new HashMap<>();
-        mapKey.put("publicKey", Base58.encode(keyPair.getB()));
-        mapKey.put("privateKey", Base58.encode(keyPair.getA()));
-
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("keyPair", mapKey);
+        jsonObject.put("publicKey", Base58.encode(keyPair.getB()));
+        jsonObject.put("privateKey", Base58.encode(keyPair.getA()));
 
         return Response.status(200).header("Content-Type", "application/json; charset=utf-8")
                 .header("Access-Control-Allow-Origin", "*")
@@ -86,9 +83,9 @@ public class ApiCrypto {
         JSONObject jsonObject = (JSONObject) jsonParser.parse(encrypt);
 
         String message = jsonObject.get("message").toString();
-        JSONObject keys = (JSONObject) jsonObject.get("keyPair");
-        byte[] publicKey = Base58.decode(keys.get("publicKey").toString());
-        byte[] privateKey = Base58.decode(keys.get("privateKey").toString());
+
+        byte[] publicKey = Base58.decode(jsonObject.get("publicKey").toString());
+        byte[] privateKey = Base58.decode(jsonObject.get("privateKey").toString());
 
         String result = Base58.encode(AEScrypto.dataEncrypt(message.getBytes(), privateKey, publicKey));
         JSONObject jsonObjectResult = new JSONObject();
@@ -114,9 +111,8 @@ public class ApiCrypto {
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(decrypt);
         byte[] message = Base58.decode(jsonObject.get("message").toString());
-        JSONObject keys = (JSONObject) jsonObject.get("keyPair");
-        byte[] publicKey = Base58.decode(keys.get("publicKey").toString());
-        byte[] privateKey = Base58.decode(keys.get("privateKey").toString());
+        byte[] publicKey = Base58.decode(jsonObject.get("publicKey").toString());
+        byte[] privateKey = Base58.decode(jsonObject.get("privateKey").toString());
         JSONObject jsonObjectResult = new JSONObject();
         byte[] result = AEScrypto.dataDecrypt(message, privateKey, publicKey);
 
@@ -145,11 +141,10 @@ public class ApiCrypto {
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(toSign);
         String message = jsonObject.get("message").toString();
-        JSONObject keys = (JSONObject) jsonObject.get("keyPair");
 
         Pair<byte[], byte[]> pair = new Pair<>();
-        pair.setA(Base58.decode(keys.get("privateKey").toString()));
-        pair.setB(Base58.decode(keys.get("publicKey").toString()));
+        pair.setA(Base58.decode(jsonObject.get("privateKey").toString()));
+        pair.setB(Base58.decode(jsonObject.get("publicKey").toString()));
         byte[] sign = Crypto.getInstance().sign(pair, message.getBytes());
 
         JSONObject jsonObjectSign = new JSONObject();

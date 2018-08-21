@@ -43,19 +43,17 @@ public class ApiCryptoTest {
         Object keysObject = ((OutboundJaxrsResponse) result).getEntity();
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(keysObject.toString());
-        JSONObject keyPair = ((JSONObject) jsonObject.get("keyPair"));
 
-        Account1_privateKey = keyPair.get("privateKey").toString();
-        Account1_publicKey = keyPair.get("publicKey").toString();
+        Account1_privateKey = jsonObject.get("privateKey").toString();
+        Account1_publicKey = jsonObject.get("publicKey").toString();
 
         Object result2 = new ApiCrypto().GenerateKeyPair(SEED_ACCOUNT2);
         Object keysObject2 = ((OutboundJaxrsResponse) result2).getEntity();
         JSONParser jsonParser2 = new JSONParser();
         JSONObject jsonObject2 = (JSONObject) jsonParser2.parse(keysObject2.toString());
-        JSONObject keyPair2 = ((JSONObject) jsonObject2.get("keyPair"));
 
-        Account2_privateKey = keyPair2.get("privateKey").toString();
-        Account2_publicKey = keyPair2.get("publicKey").toString();
+        Account2_privateKey = jsonObject2.get("privateKey").toString();
+        Account2_publicKey = jsonObject2.get("publicKey").toString();
 
     }
 
@@ -74,20 +72,19 @@ public class ApiCryptoTest {
         Object keysObject = ((OutboundJaxrsResponse) result).getEntity();
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(keysObject.toString());
-        JSONObject keys = (JSONObject) jsonObject.get("keyPair");
 
-        Assert.assertTrue(keys.keySet().contains("privateKey"));
-        Assert.assertTrue(keys.keySet().contains("publicKey"));
-        Assert.assertNotNull(keys.get("publicKey"));
-        Assert.assertNotNull(keys.get("privateKey"));
+        Assert.assertTrue(jsonObject.keySet().contains("privateKey"));
+        Assert.assertTrue(jsonObject.keySet().contains("publicKey"));
+        Assert.assertNotNull(jsonObject.get("publicKey"));
+        Assert.assertNotNull(jsonObject.get("privateKey"));
     }
 
     @Test
     public void encrypt() throws Exception {
 
         Object result = new ApiCrypto().Encrypt("{\"message\":\"" + MESSAGE + "\", " +
-                "\"keyPair\":{\"publicKey\":\"" + Account2_publicKey + "\"," +
-                "\"privateKey\":\"" + Account1_privateKey + "\"}}");
+                "\"publicKey\":\"" + Account2_publicKey + "\"," +
+                "\"privateKey\":\"" + Account1_privateKey + "\"}");
         Object encrypt = ((OutboundJaxrsResponse) result).getEntity();
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(encrypt.toString());
@@ -102,8 +99,8 @@ public class ApiCryptoTest {
             encrypt();
 
         Object result = new ApiCrypto().Decrypt("{\"message\": \"" + MESSAGE_ENCRYPT +
-                "\", \"keyPair\":{\"publicKey\":\"" + Account1_publicKey + "\",\n" +
-                "\"privateKey\":\"" + Account2_privateKey + "\"}}");
+                "\",\"publicKey\":\"" + Account1_publicKey + "\",\n" +
+                "\"privateKey\":\"" + Account2_privateKey + "\"}");
 
         Object encrypt = ((OutboundJaxrsResponse) result).getEntity();
         JSONParser jsonParser = new JSONParser();
@@ -118,9 +115,8 @@ public class ApiCryptoTest {
 
     @Test
     public void sign() throws Exception {
-        Object result = new ApiCrypto().Sign("{\"keyPair\":\n" +
-                "{\"publicKey\":\"" + Account1_publicKey + "\",\n" +
-                "\"privateKey\":\"" + Account1_privateKey + "\"}," +
+        Object result = new ApiCrypto().Sign("{\"publicKey\":\"" + Account1_publicKey + "\",\n" +
+                "\"privateKey\":\"" + Account1_privateKey + "\"," +
                 " \"message\":\"" + MESSAGE + "\"}");
 
         Object sign = ((OutboundJaxrsResponse) result).getEntity();

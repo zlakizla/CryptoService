@@ -45,7 +45,7 @@
 
   function Encrypt(ms, Acc2_public, Acc1_private) {
 
-      var data = "{\"message\": \"" + ms + "\", \"keyPair\":{\"publicKey\":\"" + Acc2_public + "\",\"privateKey\":\"" + Acc1_private + "\"}}";
+      var data = "{\"message\": \"" + ms + "\",\"publicKey\":\"" + Acc2_public + "\",\"privateKey\":\"" + Acc1_private + "\"}";
       $.ajax({
           data: data,
           url: url + "encrypt",
@@ -59,7 +59,7 @@
 
   function Decrypt(encMess, Acc1_public, Acc2_private) {
 
-      var data = "{\"message\": \"" + encMess + "\", \"keyPair\":{\"publicKey\":\"" + Acc1_public + "\",\"privateKey\":\"" + Acc2_private + "\"}}";
+      var data = "{\"message\": \"" + encMess + "\", \"publicKey\":\"" + Acc1_public + "\",\"privateKey\":\"" + Acc2_private + "\"}";  
       $.ajax({
           data: data,
           url: url + "decrypt",
@@ -73,7 +73,7 @@
 
   function Sign(encMess, Acc1_public, Acc1_private) {
 
-      var data = "{\"message\": \"" + encMess + "\", \"keyPair\":{\"publicKey\":\"" + Acc1_public + "\",\"privateKey\":\"" + Acc1_private + "\"}}";
+      var data = "{\"message\": \"" + encMess + "\", \"publicKey\":\"" + Acc1_public + "\",\"privateKey\":\"" + Acc1_private + "\"}"; 
       $.ajax({
           data: data,
           url: url + "sign",
@@ -87,8 +87,7 @@
   }
 
   function VerifySignature(encMess, Acc1_public, sign) {
-      var data = "{\"message\": \"" + encMess + "\", \"publicKey\":\"" + Acc1_public + "\",\"signature\":\"" + sign + "\"}";
-
+      var data = "{\"message\": \"" + encMess + "\", \"publicKey\":\"" + Acc1_public + "\",\"signature\":\"" + sign + "\"}"; 
       $.ajax({
           data: data,
           url: url + "verifySignature",
