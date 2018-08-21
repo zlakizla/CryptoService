@@ -1,3 +1,4 @@
+package start;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import webserver.SetSettingFile;
@@ -7,10 +8,14 @@ import java.io.File;
 import java.io.InputStream;
 
 public class Start {
-
     static Logger LOGGER = Logger.getLogger(Start.class.getName());
 
     public static void main(String args[]) throws Exception {
+        System.out.println("Build version: " + getBuildVersion());
+        System.exit(-1);
+        //System.out.println("Build info: " + getManifestInfo());
+
+
         File log4j = new File("log4j.properties");
         if (log4j.exists()) {
             PropertyConfigurator.configure(log4j.getAbsolutePath());
@@ -26,5 +31,9 @@ public class Start {
 
         new SetSettingFile().SettingFile();
         new WebServer().start();
+    }
+
+    public static String getBuildVersion() {
+        return Start.class.getPackage().getImplementationVersion();
     }
 }
