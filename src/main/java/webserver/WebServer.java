@@ -43,7 +43,7 @@ public class WebServer extends SetSettingFile {
         accessHandler.setHandler(context);
 
         //CREATE WEB SERVER
-        this.server = new Server(new InetSocketAddress("127.0.0.1",SERVER_PORT));
+        this.server = new Server(new InetSocketAddress(SERVER_BIND,SERVER_PORT));
         this.server.setHandler(accessHandler);
     }
 

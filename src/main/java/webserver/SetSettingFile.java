@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class SetSettingFile {
     static Integer SERVER_PORT;
+    static String SERVER_BIND;
     static ArrayList<String> WHITE_LIST = new ArrayList<>();
 
     /**
@@ -26,6 +27,7 @@ public class SetSettingFile {
             FileWriter fileWriter = new FileWriter("setting.json");
 
             ArrayList<String> arrayList = new ArrayList<>();
+            jsonObject.put("bind", "127.0.0.1");
             arrayList.add("127.0.0.1");
             jsonObject.put("port", "8080");
             jsonObject.put("ip", arrayList);
@@ -44,6 +46,7 @@ public class SetSettingFile {
             }
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject) jsonParser.parse(fileSetting);
+            SERVER_BIND = jsonObject.get("bind").toString();
             SERVER_PORT = Integer.parseInt(jsonObject.get("port").toString());
             JSONArray jsonArray = (JSONArray) jsonObject.get("ip");
 
