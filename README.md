@@ -1,7 +1,7 @@
-Crypto Provider
+Crypto Service
 
 
-* Js library: *"JsCryptoProvider"*
+* Js library: *"JsCryptoService"*
 
 
 * Java source: *"src/main/java"*

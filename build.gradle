@@ -17,7 +17,7 @@ ext {
     rev = git.head().getAbbreviatedId(8)
 }
 
-group 'CryptoProvider'
+group 'CryptoService'
 version "1.0-${git.head().abbreviatedId}"
 
 sourceCompatibility = 1.8
