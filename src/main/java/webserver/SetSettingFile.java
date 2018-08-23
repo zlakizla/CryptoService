@@ -29,7 +29,7 @@ public class SetSettingFile {
             ArrayList<String> arrayList = new ArrayList<>();
             jsonObject.put("bind", "127.0.0.1");
             arrayList.add("127.0.0.1");
-            jsonObject.put("port", "8080");
+            jsonObject.put("port", "8181");
             jsonObject.put("ip", arrayList);
             fileWriter.write(jsonObject.toJSONString());
             fileWriter.flush();

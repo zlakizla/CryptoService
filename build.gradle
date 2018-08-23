@@ -66,6 +66,7 @@ dependencies {
     compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.54'
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'org.springframework.boot', name: 'spring-boot', version: '2.0.4.RELEASE'
+    compile group: 'org.springframework', name: 'spring-webmvc', version: '5.0.8.RELEASE'
     compile group: 'org.eclipse.jetty.spdy', name: 'spdy-http-server', version: '9.2.26.v20180806'
     compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version: '2.22.2'
     compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version: '2.22.2'

@@ -1,14 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="CryptoService.js" ></script>
+    <script src="CryptoService.js"></script>
 </head>
+
 <body>
-    
+    <h3>Test CryptoService</h3>
+    <table border="1">
+        <tr>
+            <td style="margin-top: 10px">
+                <span>Generate rendom seed:</span>
+            </td>
+            <td style="margin-left: 10px">
+                <span id="seed"></span>
+            </td>
+        </tr>
+    </table>
+
+    <h4>Account using for test:</h4>
+    <table border="1">
+        <tr>
+            <td>Seed account1</td>
+            <td>
+                <span id="seed1"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>Seed account2</td>
+            <td>
+                <span id="seed2"></span>
+            </td>
+        </tr>
+    </table>
+
+    <h4>Keys seed 1</h4>
+    <table border="1">
+        <tr>
+            <td>Public key</td>
+            <td>
+                <span id='publicSeed1'></span>
+            </td>
+        </tr>
+        <tr>
+            <td>Private key</td>
+            <td>
+                <span id='privateSeed1'></span>
+            </td>
+        </tr>
+    </table>
+    <h4>Keys seed 2</h4>
+    <table border="1">
+        <tr>
+            <td>Public key</td>
+            <td>
+                <span id='publicSeed2'></span>
+            </td>
+        </tr>
+        <tr>
+            <td>Private key</td>
+            <td>
+                <span id='privateSeed2'></span>
+            </td>
+        </tr>
+    </table>
+
+
+    <h4>Encrypt/Decrypt</h4>
+    <table border="1">
+        <tr>
+            <td>Message</td>
+            <td>
+                <span id="message"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>Encrypt</td>
+            <td>
+                <span id="encrypt"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>Decrypt</td>
+            <td id="decrypt">
+                <span id="decrypt"></span>
+            </td>
+        </tr>
+    </table>
+    <h4>Sign/VerifySignature</h4>
+    <table border="1">
+        <tr>
+            <td>Sign</td>
+            <td>
+                <span id="sign"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>Verify sign</td>
+            <td>
+                <span id="verifySign"></span>
+            </td>
+
+        </tr>
+    </table>
 </body>
+
 </html>
