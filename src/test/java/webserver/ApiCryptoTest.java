@@ -1,6 +1,7 @@
 package webserver;
 
 import crypto.Base58;
+import crypto.Ed25519;
 import org.glassfish.jersey.message.internal.OutboundJaxrsResponse;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -142,5 +143,15 @@ public class ApiCryptoTest {
 
         Assert.assertTrue(Boolean.parseBoolean(jsonObject.get("signatureVerify").toString()));
 
+    }
+
+    @Test
+    public void sharedSecret() {
+        byte[] sharedSecret1 =
+                Ed25519.getSharedSecret(Base58.decode(Account2_publicKey), Base58.decode(Account1_privateKey));
+        byte[] sharedSecret2 =
+                Ed25519.getSharedSecret(Base58.decode(Account1_publicKey), Base58.decode(Account2_privateKey));
+
+        Assert.assertEquals(Base58.encode(sharedSecret1), Base58.encode(sharedSecret2));
     }
 }
