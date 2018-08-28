@@ -1,11 +1,14 @@
 package webserver;
 
 
+import com.google.common.primitives.Bytes;
+import com.google.common.primitives.Ints;
 import crypto.AEScrypto;
 import crypto.Base58;
 import crypto.Crypto;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import utils.Pair;
 
 import javax.ws.rs.GET;
@@ -213,6 +216,56 @@ public class ApiCrypto {
         return Response.status(200).header("Content-Type", "application/json; charset=utf-8")
                 .header("Access-Control-Allow-Origin", "*")
                 .entity(jsonObjectResult.toJSONString())
+                .build();
+    }
+
+    /**
+     * Generate account by master seed and number account
+     *
+     * @param value JSON value: seed and nonce
+     * @return JSON
+     * <h2>Example request</h2>
+     * http://127.0.0.1:8181/crypto/generateAccount
+     * <p>
+     * in body
+     * <p>
+     * {"seed":"2UiJ8Fte8bvuZSFjhdEtJ2etVvbirNRDTu8KEs9BFxch","nonce": 4}
+     * <h2>Example response</h2>
+     * {"accountSeed":"6mAg3iU1QEmq672So76QtdnsmdnGNqR7ngss8SLCzkpq",
+     * "privateKey":"5BMJVxNYHUBWkZKrcbL4stq2i975auVqmhpUmmu4d3vR15dvF7BMkzz1sDidRqTKsrCeiNFCPA9uss6P3TxqszMY",
+     * "numAccount":1,
+     * "publicKey":"AQyCxEXLewJvqzLegTW41xF3qjnTCr7tVvT6639WJsKb",
+     * "account":"7FAxosYza2B4X9GcbxGWgKW8QXUZKQystx"}
+     * @throws ParseException
+     */
+    @POST
+    @Path("generateAccount")
+    public Response generateAccount(String value) throws ParseException {
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(value);
+
+
+        Integer nonce = Integer.valueOf(jsonObject.get("nonce").toString());
+        String seed = jsonObject.get("seed").toString();
+        JSONObject jsonObjecttResult = new JSONObject();
+
+        byte[] nonceBytes = Ints.toByteArray(Integer.valueOf(nonce) - 1);
+        byte[] accountSeedConcat = Bytes.concat(nonceBytes, Base58.decode(seed), nonceBytes);
+        byte[] accountSeed = Crypto.getInstance().doubleDigest(accountSeedConcat);
+
+        Pair<byte[], byte[]> keyPair = Crypto.getInstance().createKeyPair(accountSeed);
+
+        String address = Crypto.getInstance().getAddress(keyPair.getB());
+
+        jsonObjecttResult.put("numAccount", nonce);
+        jsonObjecttResult.put("accountSeed", Base58.encode(accountSeed));
+        jsonObjecttResult.put("publicKey", Base58.encode(keyPair.getB()));
+        jsonObjecttResult.put("privateKey", Base58.encode(keyPair.getA()));
+        jsonObjecttResult.put("account", address);
+
+        return Response.status(200).header("Content-Type", "application/json; charset=utf-8")
+                .header("Access-Control-Allow-Origin", "*")
+                .entity(jsonObjecttResult.toJSONString())
                 .build();
     }
 }

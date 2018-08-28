@@ -1,4 +1,4 @@
-  var url = "http://127.0.0.1:8080/crypto/";
+  var url = "http://127.0.0.1:8181/crypto/";
   $(document).ready(function () {
         var Account1_seed = "2UiJ8Fte8bvuZSFjhdEtJ2etVvbirNRDTu8KEs9BFxch";
         var Account1_privateKey = "4XeFFL279quugYpvkqSPHwsK68jumG7C9CWz7QzSWJapjSB1FGiSDSawg65YZorRt2GbAP25gGv8ooduMxWpp7HD";
@@ -28,6 +28,7 @@
       Decrypt(encryptMessage, Account1_publicKey, Account2_privateKey);
       Sign(encryptMessage, Account1_publicKey, Account1_privateKey);
       VerifySignature(encryptMessage, Account1_publicKey, signature);
+      GenerateAccount(Account1_seed);
   });
 
   function GenerateSeed() {
@@ -121,4 +122,23 @@
           }
       });
 
+  }
+
+  function GenerateAccount(seed) {
+      var data = "{\"seed\": \"" + seed + "\", \"nonce\":4}";
+      $.ajax({
+          data: data,
+          url: url + "generateAccount",
+          type: "POST",
+          success: function (d) {
+              $("#seedGenAccount").text(seed);
+              $("#numAccount").text(d.numAccount);
+              $("#accountSeed").text(d.accountSeed);
+              $("#publicKeyGen").text(d.publicKey);
+              $("#privateKeyGen").text(d.privateKey);
+              $("#account").text(d.account);
+
+              console.log(d);
+          }
+      });
   }

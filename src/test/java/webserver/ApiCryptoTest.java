@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import java.util.Random;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class ApiCryptoTest {
 
@@ -153,5 +153,21 @@ public class ApiCryptoTest {
                 Ed25519.getSharedSecret(Base58.decode(Account1_publicKey), Base58.decode(Account2_privateKey));
 
         Assert.assertEquals(Base58.encode(sharedSecret1), Base58.encode(sharedSecret2));
+    }
+
+    @Test
+    public void generateAccount() throws Exception {
+
+        Object result = new ApiCrypto().generateAccount("{\"seed\":\"2UiJ8Fte8bvuZSFjhdEtJ2etVvbirNRDTu8KEs9BFxch\",\"nonce\":4}");
+        Object value = ((OutboundJaxrsResponse) result).getEntity();
+        JSONParser jsonParser = new JSONParser();
+
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(value.toString());
+        assertNotNull(jsonObject);
+        assertEquals(Integer.parseInt(jsonObject.get("numAccount").toString()), 4);
+        assertEquals(jsonObject.get("accountSeed"), "6MerziUEfzicW2bzTogjmP4E4tZK7wnwAvoWurktmTHj");
+        assertEquals(jsonObject.get("publicKey"), "CeMcZK4P6no5YzpTbgakBH66Brf27FYybrVeDsMj2ZNd");
+        assertEquals(jsonObject.get("privateKey"), "L1u9aTnn3jnrjTEdVT5kGbbNxM5GcVSmWC7pf9mu5zYGnE1RpgpZjfYvMKFqypKKmdRvSo79G2hMvSvVCKmnmvf");
+        assertEquals(jsonObject.get("account"), "75aS9viw8C5rxa78AqutzLiMzwM9RS7pTk");
     }
 }
