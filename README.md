@@ -164,3 +164,42 @@ JSON format. In case if the signature verification was successful the system wil
 ```JSON
 {"signatureVerify":"true"}
 ```
+
+## Generate account
+
+| Field | Type   | Description    |
+| ----- | ------ | -------------- |
+| seed  | String | master key     |
+| nonce | String | Number account |
+
+Method POST
+
+Example request:
+
+In body
+
+```JSON
+{"seed":"2UiJ8Fte8bvuZSFjhdEtJ2etVvbirNRDTu8KEs9BFxch","nonce":4}
+```
+
+Example response:
+
+JSON format. Answer contains account seed, private/public key, account, number account.
+
+```JSON
+{
+"accountSeed": "6MerziUEfzicW2bzTogjmP4E4tZK7wnwAvoWurktmTHj",
+"privateKey": "L1u9aTnn3jnrjTEdVT5kGbbNxM5GcVSmWC7pf9mu5zYGnE1RpgpZjfYvMKFqypKKmdRvSo79G2hMvSvVCKmnmvf",
+"numAccount": 4,
+"publicKey": "CeMcZK4P6no5YzpTbgakBH66Brf27FYybrVeDsMj2ZNd",
+"account": "75aS9viw8C5rxa78AqutzLiMzwM9RS7pTk"
+}
+```
+
+| Field       | Type    | Description                     |
+| ----------- | ------- | ------------------------------- |
+| accountSeed | String  | seed account in Base58 encoding |
+| privateKey  | String  | private key in Base58 encoding  |
+| numAccount  | Integer | number account                  |
+| publicKey   | String  | public key in Base58 encoding   |
+| account     | String  | account in Base58 encoding      |
